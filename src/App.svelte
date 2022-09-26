@@ -97,7 +97,7 @@
 		for local data (if flask app is running):
 		http://127.0.0.1:5001/candidate-tracker/json/
 		*/
-		let res = await fetch(`http://127.0.0.1:5001/candidate-tracker/json/`);
+		let res = await fetch(`https://s3.amazonaws.com/data.minnpost/projects/spreadsheets/1qrJaQEerdDI2eghz8dYbxB1eAhjw7rYhDOrqapHqR_Y-Candidates|Races-custom.json`);
 		let data = await res.json();
 		items = data
 		return items;
