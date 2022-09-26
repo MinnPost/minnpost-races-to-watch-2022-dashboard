@@ -97,12 +97,12 @@
 		{/if}
 
 		{#if candidate["lives-in"]}
-		<div class="hometown"> 🏠 Lives in: {candidate["lives-in"]}</div>
+			<div class="hometown"><i class="fas fa-fw fa-home"></i> Lives in: {candidate["lives-in"]}</div>
 		{/if}
 
-		{#if candidate["incumbent?"]}
+		{#if candidate["incumbent"]}
 		<div class="incumbent">
-			⭐ Member of {capString(candidate.chamber)}
+			<div class="incumbent"><i class="fas fa-fw fa-star"></i> Member of {capString(candidate.chamber)}</div>
 			{#if candidate["year-first-elected"]}
 			<div class="first-elected">
 				First elected in {candidate["year-first-elected"]}
@@ -111,13 +111,15 @@
 		</div>
 		{/if}
 
-		{#if candidate["endorsed?"]}
-		<div class="endorsed"> ✔️
-			Endorsed by <span class="party-{candidate["party-id"]}">{candidate.party} {#if candidate.party != "DFL"} Party{/if}</span></div>
+		{#if candidate["endorsed"]}
+			<div class="endorsed">
+				<span class="icon party-{candidate["party-id"]}"><i class="fas fa-fw fa-check-square"></i></span> 
+				Endorsed by <span class="party-{candidate["party-id"]}">{candidate.party} {#if candidate.party != "DFL"} Party{/if}</span>
+			</div>
 		{/if}
 
 		{#if candidate.website}
-			<div class="website">🔗 <a href="{candidate.website}" target="_blank">Campaign website</a></div>
+			<div class="website"><a href="{candidate.website}" target="_blank"><i class="fas fa-fw fa-globe"></i> Campaign website</a></div>
 		{/if}
 
 	</div>

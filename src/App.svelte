@@ -97,7 +97,7 @@
 		for local data (if flask app is running):
 		http://127.0.0.1:5001/candidate-tracker/json/
 		*/
-		let res = await fetch(`https://s3.amazonaws.com/data.minnpost/projects/spreadsheets/1qrJaQEerdDI2eghz8dYbxB1eAhjw7rYhDOrqapHqR_Y-Candidates|Races-custom.json`);
+		let res = await fetch(`http://127.0.0.1:5001/candidate-tracker/json/`);
 		let data = await res.json();
 		items = data
 		return items;
@@ -108,30 +108,10 @@
 	$: filteredList = dataPromise.then((r) => {
 		// filter the districts and/or candidates by the search term
 		let candidates = items.candidates;
-		let districts = candidates.reduce(function(filtered, item) {
-			if ( item.district && item.region && item.chamber && item.party ) {
-				district = {
-					"district": item.district,
-					"region": item.region,
-					"chamber": item.chamber,
-					"label": item.chamber[0].toUpperCase() + item.chamber.slice(1).concat(' District ', (item.district[0] == "0") ? item.district.substring(1) : item.district)
-				}
-				district = JSON.stringify(district);
-				filtered.push(district);
-			}
-			return [...new Set(filtered)];
-		}, []);
-
-		districts = districts.map(function(item) {
-            if (typeof item === 'string') {
-                return JSON.parse(item);
-            } else if (typeof item === 'object') {
-                return item;
-            }
-        });
+		let races = items.races;
 
 		// filter chambers
-		let chambers = items.candidates.reduce(function(filtered, item) {
+		let chambers = items.races.reduce(function(filtered, item) {
 			if ( item.chamber ) {
 				let chamber = item.chamber;
 				filtered.push(chamber);
@@ -139,16 +119,12 @@
 			return [...new Set(filtered)];
 		}, []);
 
-		// make the final data array of districts and candidates, and parties and offices, for filteredList to use and return it
+		// make the final data array for filteredList to use and return it
 		let data = [];
 
-		if ( typeof districts !== "undefined" ) {
-			data["districts"] = districts;
-			for (var index = 0, len = districts.length; index < len; index++) {
-				var district = districts[index];
-			}
+		if ( typeof races !== "undefined" ) {
+			data["races"] = races;
 		}
-
 		if ( typeof chambers !== "undefined" ) {
 			data["chambers"] = chambers;
 		}

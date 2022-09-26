@@ -1,6 +1,6 @@
 <script>
 
-export let district_region;
+export let office;
 export let candidates;
 
 // single candidate template
@@ -45,15 +45,18 @@ let showMap = false;
 </style>
 
 <section class="m-district">
-  <h3>{district_region.label}</h3>
-  <h5>{district_region.region}</h5>
+  <h3>{office.office}</h3>
+  <h5>{office.region}</h5>
   {#if showMap}
     <button value="" on:click="{() => showMap = false}">Hide map</button>
     <div class="map-container">
-      <Map district={district_region.district}/>
+      <Map district={office.district}/>
     </div>
   {:else}
   <button value="" on:click="{() => showMap = true}">Show on map</button>
+  {/if}
+  {#if office.blurb}
+      <p>{@html office.blurb}</p>
   {/if}
   <div class="candidates-listing">
   {#each candidates as candidate}

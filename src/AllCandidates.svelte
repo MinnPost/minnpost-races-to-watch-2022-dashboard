@@ -5,14 +5,22 @@
     // the candidates from App.svelte
 	let candidates = items.candidates;
 
-    // the districts from App.svelte
-    let districts = items.districts;
+    // the races from App.svelte
+    let races = items.races;
 
-    // create a list of candidates in their chamber or district
-	let district_candidates = function(chamber, district = '') {
-        if (district !== '') {
+    // create a list of races in their chamber
+	let chamber_offices = function(chamber) {
+        races = items.races.filter(
+            item => item["chamber"] == chamber
+        );
+        return races;
+	}
+
+    // create a list of candidates in their chamber/office
+	let office_candidates = function(chamber, office = '') {
+        if (office !== '') {
             candidates = items.candidates.filter(
-                item => item["chamber"] == chamber && item["district"] == district
+                item => item["chamber"] == chamber && item["office-sought"] == office
             );
         } else {
             candidates = items.candidates.filter(
@@ -22,40 +30,16 @@
         return candidates;
 	}
 
-    let chamber_candidate_district_regions = function(candidates) {
-        let district_regions = districts.filter(o1 => candidates.some(o2 => o1.district === o2.district));
-        district_regions = district_regions.reduce(function(filtered, option) {
-            var item = JSON.stringify(option);
-            filtered.push(item);
-            return [...new Set(filtered)];
-        }, []);
-        district_regions = district_regions.map(function(item) {
-            if (typeof item === 'string') {
-                return JSON.parse(item);
-            } else if (typeof item === 'object') {
-                return item;
-            }
-        });
-        return district_regions;
-    }
-
     // single candidate template
 	import Race from "./Race.svelte";
     
 </script>
 
 {#each items.chambers as chamber}
-    {#if district_candidates(chamber).length > 0}
-        <section class="chamber-listing">
-            <h2 class="m-archive-header m-chamber-header">{chamber}</h2>
-            {#if chamber.blurb}
-                <p>{@html chamber.blurb}</p>
-            {/if}
-            {#each chamber_candidate_district_regions(district_candidates(chamber)) as district_region, key}
-                {#if district_candidates(chamber, district_region.district).length > 0}
-                    <Race district_region={district_region} candidates={district_candidates(chamber, district_region.district)} />
-                {/if}
-            {/each}
-        </section>
-    {/if}
+    <section class="chamber-listing">
+        <h2 class="m-archive-header m-chamber-header">{chamber}</h2>
+        {#each chamber_offices(chamber) as office}
+            <Race office={office} candidates={office_candidates(chamber, office.office)} />
+        {/each}
+    </section>
 {/each}
