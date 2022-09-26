@@ -93,7 +93,7 @@
 
 	<div class="m-entry-meta candidate-meta">
 		{#if candidate["party"]}
-			<div class="party-name party-{candidate["party-id"]}-icon">{candidate.party}</div>
+			<div class="party-name party-{candidate["party-id"]}"><i class="fas fa-fw fa-{party_icons[candidate["party-id"]] ?? "circle"}"></i> {candidate.party}</div>
 		{/if}
 
 		{#if candidate["lives-in"]}
