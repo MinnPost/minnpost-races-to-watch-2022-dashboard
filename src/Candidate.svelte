@@ -114,7 +114,7 @@
 		{#if candidate["endorsed"]}
 			<div class="endorsed">
 				<span class="icon party-{candidate["party-id"]}"><i class="fas fa-fw fa-check-square"></i></span> 
-				Endorsed by <span class="party-{candidate["party-id"]}">{candidate.party} {#if candidate.party != "DFL"} Party{/if}</span>
+				Endorsed by <span class="party-{candidate["party-id"]}">{#if candidate.party == "Republican"}GOP{:else}{candidate.party}{/if}</span>
 			</div>
 		{/if}
 
