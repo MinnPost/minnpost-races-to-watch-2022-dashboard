@@ -84,8 +84,14 @@ const party_icons = {
         <p>{@html office.blurb}</p>
     {/if}
     <h4>Past election results in this district</h4>
-    {#if office["2016-pres"] || office["2016-20-comp"] }
+    {#if office["2020-pres"] || office["2016-pres"] || office["2016-20-comp"] }
       <ul class="past-elections">
+        <li>2020 presidential election:
+          <div class="party-name party-{office["2020-pres-party-id"]}">
+            <i class="fas fa-fw fa-{party_icons[office["2020-pres-party-id"]] ?? "circle"}"></i>
+            {office['2020-pres']}
+          </div>
+        </li>
         <li>2016 presidential election:
           <div class="party-name party-{office["2016-pres-party-id"]}">
             <i class="fas fa-fw fa-{party_icons[office["2016-pres-party-id"]] ?? "circle"}"></i>
