@@ -49,10 +49,10 @@ const party_icons = {
     margin-bottom: 0.75em;
   }
 
-  .district-info .past-elections div {
+  .district-info .district-info-list div {
     display: inline-block;
   }
-  .district-info .past-elections li {
+  .district-info .district-info-list li {
     margin-bottom: 0.25em;
   }
 
@@ -83,9 +83,9 @@ const party_icons = {
     {#if office.blurb}
         <p>{@html office.blurb}</p>
     {/if}
-    <h4>Past election results in this district</h4>
     {#if office["2020-pres"] || office["2016-pres"] || office["2016-20-comp"] }
-      <ul class="past-elections">
+      <h4>Past election results in this district</h4>
+      <ul class="district-info-list past-elections">
         <li>2020 presidential election:
           <div class="party-name party-{office["2020-pres-party-id"]}">
             <i class="fas fa-fw fa-{party_icons[office["2020-pres-party-id"]] ?? "circle"}"></i>
@@ -104,6 +104,13 @@ const party_icons = {
             {office['2016-20-comp']}
           </div>
         </li>
+      </ul>
+    {/if}
+    {#if office["expenditures-dfl"] || office["expenditures-republican"] }
+      <h4>Independent expenditures in this district</h4>
+      <ul class="district-info-list independent-expenditures">
+        <li>To help Democrats: {office['expenditures-dfl']}</li>
+        <li>To help Republicans: {office['expenditures-republican']}</li>
       </ul>
     {/if}
   </div>
